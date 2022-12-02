@@ -26,6 +26,10 @@
             height: 90%;
             width: 100%;
         }
+
+        .mapboxgl-popup {
+            max-width: 500px;
+        }
     </style>
 </head>
 
@@ -65,11 +69,10 @@
                 // HTML from the click event's properties.
                 map.on('click', 'states-layer', (e) => {
                     var name = e.features[0].properties.name;
-                    var imlink = name + ".png";
+                    var imlink = "https://sjliu.me/usdtr1/dtr1/" + name + ".png";
                     new mapboxgl.Popup()
                         .setLngLat(e.lngLat)
-                        //.setHTML(name)
-                        .setHTML("<p><a href=\"" + name + "\" target=\"_blank\" style=\"color: DarkBlue\">Click here for the Image</a></p> <p><a href=\"" + "https://sjliu.me/dtr1/" +name + "\" target=\"_blank\"><img alt=\"dtr1\" src=\"" +imlink+ "\" width=\"220\"></a></p>")
+                        .setHTML("<p><a href=\"" + imlink + "\" target=\"_blank\"><img alt=\"dtr1\" src=\"" + imlink + "\" width=\"500\"></a></p>")
                         .addTo(map);
                 });
 
