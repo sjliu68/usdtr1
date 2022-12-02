@@ -43,14 +43,14 @@
                 zoom: 4
             });
             map.on('load', function () {
-                map.addSource('DTR', {
+                map.addSource('dtr', {
                     'type': 'geojson',
-                    'data': 'usstatessmall.geojson'
+                    'data': 'https://sjliu.me/usdtr1/usstatesmall2.geojson'
                 });
                 map.addLayer({
-                    'id': 'DTR',
+                    'id': 'dtr',
                     'type': 'fill',
-                    'source': 'DTR',
+                    'source': 'dtr',
                     'paint': {
                         'fill-color': '#0080ff', // blue color fill
                         'fill-opacity': 0.5
@@ -59,13 +59,40 @@
                 map.addLayer({
                     'id': 'outline',
                     'type': 'line',
-                    'source': 'DTR',
+                    'source': 'dtr',
                     'layout': {},
                     'paint': {
                         'line-color': '#000',
                         'line-width': 2
                     }
                 });
+            });
+            map.on('click', 'dtr', function (e) {
+                var coordinates = e.features[0].geometry.coordinates.slice();
+                var description = e.features[0].properties.STATE_NAME;
+                var paraim = description
+                var imlink = "https://sjliu.me/usdtr1/dtr1/" + paraim + ".png";
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+                var popup = new mapboxgl.Popup({
+                    closeButton: true,
+                    closeOnClick: true
+                });
+
+                popup
+                    .setLngLat(coordinates)
+                    .setHTML("<p><a href=\"" + description + "\" target=\"_blank\" style=\"color: DarkBlue\">Click here for the Image</a></p> <p><a href=\"" + description + "\" target=\"_blank\"><img alt=\"figs20221127c\" src=\"" + imlink + "\" width=\"220\"></a></p>")
+                    .addTo(map);
+            });
+            // Change the cursor to a pointer when the mouse is over the places layer.
+            map.on('mouseenter', 'points', function () {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+            // Change it back to a pointer when it leaves.
+            map.on('mouseleave', 'points', function () {
+                map.getCanvas().style.cursor = '';
             });
         </script>
     </div>
