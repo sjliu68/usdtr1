@@ -65,10 +65,11 @@
                 // HTML from the click event's properties.
                 map.on('click', 'states-layer', (e) => {
                     var name = e.features[0].properties.name;
-                    var imlink = "dtr1/" + name + ".png";
+                    var imlink = name + ".png";
                     new mapboxgl.Popup()
                         .setLngLat(e.lngLat)
-                        .setHTML(name)
+                        //.setHTML(name)
+                        .setHTML("<p><a href=\"" + name + "\" target=\"_blank\" style=\"color: DarkBlue\">Click here for the Image</a></p> <p><a href=\"" + "https://sjliu.me/dtr1/" +name + "\" target=\"_blank\"><img alt=\"dtr1\" src=\"" +imlink+ "\" width=\"220\"></a></p>")
                         .addTo(map);
                 });
 
