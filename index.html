@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<link href="js/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Diurnal Temperature Range Across the United States</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="js/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,500i,700,800i" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 5%;
+            left: 0;
+            height: 90%;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body style="background-color:black;">
+    <div style="float:left;" id="map">
+        <script>
+            // TO MAKE THE MAP APPEAR YOU MUST
+            // ADD YOUR ACCESS TOKEN FROM
+            // https://account.mapbox.com
+            mapboxgl.accessToken = 'pk.eyJ1Ijoic3RvcDY4IiwiYSI6ImNqY2tqdmY5ZjN1c2kzM28zN3pncTkxc3kifQ.5O5ns1xgihc9i6XvQxCFJQ';
+            var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/dark-v10',
+                center: [-100, 38],
+                zoom: 4
+            });
+            map.on('load', function () {
+                map.addSource('DTR', {
+                    'type': 'geojson',
+                    'data': 'usstatessmall.geojson'
+                });
+                map.addLayer({
+                    'id': 'DTR',
+                    'type': 'fill',
+                    'source': 'DTR',
+                    'paint': {
+                        'fill-color': '#0080ff', // blue color fill
+                        'fill-opacity': 0.5
+                    }
+                });
+                map.addLayer({
+                    'id': 'outline',
+                    'type': 'line',
+                    'source': 'DTR',
+                    'layout': {},
+                    'paint': {
+                        'line-color': '#000',
+                        'line-width': 2
+                    }
+                });
+            });
+        </script>
+    </div>
+</body>
+
+</html>
